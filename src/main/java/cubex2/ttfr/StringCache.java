@@ -1,5 +1,6 @@
 package cubex2.ttfr;
 
+import javax.annotation.Nullable;
 import java.awt.*;
 import java.awt.font.GlyphVector;
 import java.lang.ref.WeakReference;
@@ -275,7 +276,7 @@ public class StringCache
      * @param fontSize  the new point size
      * @param antiAlias turn on anti aliasing
      */
-    public void setDefaultFont(String fontName, int fontSize, boolean antiAlias)
+    public void setDefaultFont(@Nullable String fontName, int fontSize, boolean antiAlias)
     {
         /* Change the font in the glyph cache and clear the string cache so all strings have to be re-layed out and re-rendered */
         glyphCache.setDefaultFont(fontName, fontSize, antiAlias);
