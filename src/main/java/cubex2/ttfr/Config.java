@@ -64,14 +64,31 @@ public class Config {
         }
     }
 
-    public static void applyFont(IBFFontRenderer font) {
-        font.setDropShadowEnabled(dropShadow);
+    public static void applyFont(IBFFontRenderer fontRenderer) {
+        fontRenderer.setDropShadowEnabled(dropShadow);
 
-        if (TextUtils.isEmpty(fontName)) {
-            font.getStringRenderer().getCache().setDefaultFont(null, 18, false);
-        } else {
-            font.getStringRenderer().getCache().setDefaultFont(getActualFontName(fontName), fontSize, antiAlias);
+        String localFontName = fontName;
+        if (TextUtils.isEmpty(localFontName)) {
+            localFontName = "SansSerif";
         }
+
+        Font font = null;
+
+        if (localFontName.startsWith("file:")) {
+            try {
+                String pathToFont = localFontName.substring("file:".length());
+                File fontFile = new File(cfg.getConfigFile().getParent(), pathToFont);
+                font = Font.createFont(Font.PLAIN, fontFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (font == null) {
+            font = new Font(getActualFontName(localFontName), Font.PLAIN, 72);
+        }
+
+        fontRenderer.getStringRenderer().getCache().setDefaultFont(font, fontSize, antiAlias);
     }
 
     private static String[] getAllFontNames() {

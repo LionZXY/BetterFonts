@@ -1,5 +1,6 @@
 package cubex2.ttfr;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.awt.font.GlyphVector;
@@ -272,14 +273,14 @@ public class StringCache
      * Change the default font used to pre-render glyph images. If this method is called at runtime, the string cache is flushed so that
      * all visible strings will be immediately re-layed out using the new font selection.
      *
-     * @param fontName  the new font name
+     * @param font  the new font
      * @param fontSize  the new point size
      * @param antiAlias turn on anti aliasing
      */
-    public void setDefaultFont(@Nullable String fontName, int fontSize, boolean antiAlias)
+    public void setDefaultFont(@Nonnull Font font, int fontSize, boolean antiAlias)
     {
         /* Change the font in the glyph cache and clear the string cache so all strings have to be re-layed out and re-rendered */
-        glyphCache.setDefaultFont(fontName, fontSize, antiAlias);
+        glyphCache.setDefaultFont(font, fontSize, antiAlias);
         antiAliasEnabled = antiAlias;
         weakRefCache.clear();
         stringCache.clear();

@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import org.apache.http.util.TextUtils;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
@@ -242,21 +243,10 @@ public class GlyphCache {
      * in their respective textures and will remain accessible to StringCache. This method is normally called by StringCache.setDefaultFont() since
      * the StringCache must also invalidate itself so it can re-layout and re-cache the glyphs for all strings using the new font.
      *
-     * @param name the new font name
+     * @param font font
      * @param size the new point size
      */
-    void setDefaultFont(@Nullable String name, int size, boolean antiAlias) {
-        Font font;
-        try {
-            if (TextUtils.isEmpty(name)) {
-                font = Font.createFont(Font.PLAIN, getClass().getResourceAsStream("/minecraftcustomfont.ttf"));
-            } else {
-                font = new Font(name, Font.PLAIN, 72);
-            }
-        } catch (Exception e) {
-            font = new Font(name, Font.PLAIN, 72);
-            e.printStackTrace();
-        }
+    void setDefaultFont(@Nonnull Font font, int size, boolean antiAlias) {
         System.out.println("BetterFonts loading font \"" + font.getFontName() + "\"");
         usedFonts.clear();
         usedFonts.add(font); //size 1 > 72
